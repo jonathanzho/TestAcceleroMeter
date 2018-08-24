@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.jonathan.testaccelerometer.utils.ConstantsUtils;
+import com.example.jonathan.testaccelerometer.utils.WifiManagerUtils;
 
 import java.util.List;
 
@@ -74,6 +75,11 @@ public class MainActivity extends Activity {
 
     if (mIsAcceleroMeterPresent) {
       mSensorManager.registerListener(mAcceleroMeterListener, mAcceleroMeterSensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    boolean isWifiEnabled = WifiManagerUtils.getWifiEnabled(this);
+    if (!isWifiEnabled) {
+      WifiManagerUtils.setWifiEnabled(this,true);
     }
   }
 

@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
     mAcceleroMeterListener = new SensorEventListener() {
       @Override
       public void onSensorChanged(SensorEvent event) {
-        Log.d(TAG, "onSensorChanged");
+        Log.d(TAG, "onSensorChanged");    // !!! This is called very frequently, about 6 times per second.
 
         float zValue = event.values[2];
 

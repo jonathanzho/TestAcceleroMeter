@@ -12,10 +12,15 @@ public class JobSchedulerUtils {
   private static final String TAG = ConstantsUtils.APP_TAG + JobSchedulerUtils.class.getSimpleName();
 
   public static void scheduleWiFiConnection(Context context) {
-    Log.d(TAG, "scheduleWiFiConnection: WIFI_CONNECTION_PERIOD_MILLIS=[" + ConstantsUtils.WIFI_CONNECTION_PERIOD_MILLIS + "]");
+    Log.d(TAG, "scheduleWiFiConnection: REBOOT_OVERRIDE_DEADLINE_MILLIS=[" + ConstantsUtils.REBOOT_OVERRIDE_DEADLINE_MILLIS + "]");
 
-    schedulePeriodicJob(context, WiFiConnectionJobService.class, ConstantsUtils.WIFI_CONNECTION_PERIOD_MILLIS,
-        ConstantsUtils.WIFI_CONNECTION_JOB_ID);
+    ComponentName wiFiConnectionJobServiceComponent = new ComponentName(context, WiFiConnectionJobService.class);
+    JobInfo.Builder builder = new JobInfo.Builder(ConstantsUtils.WIFI_CONNECTION_JOB_ID,
+        wiFiConnectionJobServiceComponent);
+    builder.setOverrideDeadline(ConstantsUtils.REBOOT_OVERRIDE_DEADLINE_MILLIS);
+    JobInfo jobInfo = builder.build();
+
+    schedule(context, jobInfo);
   }
 
   private static void schedulePeriodicJob(Context context, Class<?> cls, long periodInMillis, int jobId) {

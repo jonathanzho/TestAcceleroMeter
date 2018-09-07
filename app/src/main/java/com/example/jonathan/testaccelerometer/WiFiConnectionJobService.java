@@ -32,7 +32,7 @@ public class WiFiConnectionJobService extends JobService {
     final Context context = getApplicationContext();
     performJob(context, jobParameters);
 
-    boolean continueToRunService = true;    // because performJob() has an AsyncTask.
+    boolean continueToRunService = false;
 
     return continueToRunService;
   }
@@ -40,7 +40,7 @@ public class WiFiConnectionJobService extends JobService {
   public boolean onStopJob(JobParameters jobParameters) {
     Log.w(TAG, "onStopJob. Usually this should not be called !");
 
-    boolean rescheduleJob = false;    // The job is rescheduled in StartJob(), so there is no need to repeat it here.
+    boolean rescheduleJob = true;
 
     return rescheduleJob;
   }

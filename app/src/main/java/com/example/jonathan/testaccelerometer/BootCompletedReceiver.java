@@ -14,14 +14,15 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
   @Override
   public void onReceive(Context context, Intent intent) {
-    Log.d(TAG, "onReceive:");
+    String actionStr = intent.getAction();
 
-    Intent launchSelfIntent = new Intent(context, MainActivity.class);
-    launchSelfIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    Log.v(TAG, "onReceive: starting launcher Activity for package=[" + context.getPackageName() + "]");
-    context.startActivity(launchSelfIntent);
+    Log.d(TAG, "onReceive: actionStr=[" + actionStr + "]");
 
-    handleFaceDownWiFiConnection(context);
+    if (Intent.ACTION_BOOT_COMPLETED.equals(actionStr)) {    // to avoid spoofed Action
+      handleFaceDownWiFiConnection(context);
+    } else {
+      Log.e(TAG, "onReceive: Spoofed Action Intent received !!!");
+    }
   }
 
   private void handleFaceDownWiFiConnection(Context context) {

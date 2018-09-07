@@ -25,7 +25,7 @@ public class WifiManagerUtils {
       enabled = wifiManager.isWifiEnabled();
     }
 
-    Log.v(TAG, "getWifiEnabled; enabled=[" + enabled + "]");
+    Log.v(TAG, "getWifiEnabled: enabled=[" + enabled + "]");
 
     return enabled;
   }

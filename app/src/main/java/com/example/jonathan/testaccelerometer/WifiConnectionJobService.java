@@ -9,8 +9,8 @@ import com.example.jonathan.testaccelerometer.utils.ConstantsUtils;
 import com.example.jonathan.testaccelerometer.utils.SensorManagerUtils;
 import com.example.jonathan.testaccelerometer.utils.WifiManagerUtils;
 
-public class WiFiConnectionJobService extends JobService {
-  private static final String TAG = ConstantsUtils.APP_TAG + WiFiConnectionJobService.class.getSimpleName();
+public class WifiConnectionJobService extends JobService {
+  private static final String TAG = ConstantsUtils.APP_TAG + WifiConnectionJobService.class.getSimpleName();
 
   @Override
   public void onCreate() {
@@ -57,9 +57,24 @@ public class WiFiConnectionJobService extends JobService {
 
       if (!wifiEnabled) {
         WifiManagerUtils.setWifiEnabled(TAMApplication.getContext(), true);
-
-        // TODO: connect to the specific wifi
+      } else {
+        Log.v(TAG, "performJob: WiFi is already enabled. Exit.");
+        return;
       }
+
+      wifiEnabled = WifiManagerUtils.checkWifiEnabledPeriodically(context,
+          ConstantsUtils.CHECK_WIFI_ENABLED_MILLIS,
+          ConstantsUtils.CHECK_WIFI_ENABLED_MAX_TRIALS);
+
+      if (wifiEnabled) {
+        WifiManagerUtils.connect(context, ConstantsUtils.MOBILE_HOTSPOT_SSID, ConstantsUtils.MOBILE_HOTSPOT_PASS);
+      } else {
+        Log.e(TAG, "performJob: WiFi is not enabled after request. Exit !!!");
+        return;
+      }
+    } else {
+      Log.v(TAG, "performJob: Phone face is up. Exit.");
+      return;
     }
 
     Log.v(TAG, "performJob: end");

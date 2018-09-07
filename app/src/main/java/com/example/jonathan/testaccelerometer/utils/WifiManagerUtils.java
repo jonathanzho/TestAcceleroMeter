@@ -1,6 +1,7 @@
 package com.example.jonathan.testaccelerometer.utils;
 
 import android.content.Context;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.util.Log;
 
@@ -30,6 +31,34 @@ public class WifiManagerUtils {
     return enabled;
   }
 
+  public static boolean checkWifiEnabledPeriodically(final Context context, final long sleepMillis, final int maxTrials) {
+    Log.d(TAG, "checkWifiEnabledPeriodically: sleepMillis=[" + sleepMillis + "], maxTrials=[" + maxTrials + "]");
+
+    boolean wifiEnabled = false;
+
+    int count = 0;
+
+    while (count < maxTrials) {
+      count++;
+
+      wifiEnabled = getWifiEnabled(context);
+
+      Log.v(TAG, "checkWifiEnabledPeriodically: wifiEnabled=[" + wifiEnabled + "], count=[" + count + "]");
+
+      if (wifiEnabled) {
+        break;
+      }
+
+      try {
+        Thread.sleep(sleepMillis);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+
+    return wifiEnabled;
+  }
+
   public static int getWifiState(final Context context) {
     WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 
@@ -41,5 +70,20 @@ public class WifiManagerUtils {
     Log.v(TAG, "getWifiState; state=[" + state + "]");
 
     return state;
+  }
+
+  public static void connect(final Context context, final String networkSSID, final String networkPass) {
+    Log.d(TAG, "connect: networkSSID=[" + networkSSID + "], networkPass=[" + networkPass + "]");
+
+    WifiConfiguration wifiConfig = new WifiConfiguration();
+    wifiConfig.SSID = String.format("\"%s\"", networkSSID);
+    wifiConfig.preSharedKey = String.format("\"%s\"", networkPass);
+
+    WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+    //remember id
+    int netId = wifiManager.addNetwork(wifiConfig);
+    wifiManager.disconnect();
+    wifiManager.enableNetwork(netId, true);
+    wifiManager.reconnect();
   }
 }

@@ -6,7 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.jonathan.testaccelerometer.WiFiConnectionJobService;
+import com.example.jonathan.testaccelerometer.WifiConnectionJobService;
 
 public class JobSchedulerUtils {
   private static final String TAG = ConstantsUtils.APP_TAG + JobSchedulerUtils.class.getSimpleName();
@@ -14,7 +14,7 @@ public class JobSchedulerUtils {
   public static void scheduleWiFiConnection(Context context) {
     Log.d(TAG, "scheduleWiFiConnection: REBOOT_OVERRIDE_DEADLINE_MILLIS=[" + ConstantsUtils.REBOOT_OVERRIDE_DEADLINE_MILLIS + "]");
 
-    ComponentName wiFiConnectionJobServiceComponent = new ComponentName(context, WiFiConnectionJobService.class);
+    ComponentName wiFiConnectionJobServiceComponent = new ComponentName(context, WifiConnectionJobService.class);
     JobInfo.Builder builder = new JobInfo.Builder(ConstantsUtils.WIFI_CONNECTION_JOB_ID,
         wiFiConnectionJobServiceComponent);
     builder.setOverrideDeadline(ConstantsUtils.REBOOT_OVERRIDE_DEADLINE_MILLIS);

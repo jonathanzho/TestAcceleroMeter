@@ -33,15 +33,15 @@ public class SensorManagerUtils {
 
     mAcceleroMeterListener = new SensorEventListener() {
       @Override
-      public void onSensorChanged(SensorEvent event) {
-        Log.d(TAG, "onSensorChanged");    // !!! This is called very frequently, about 6 times per second.
-
+      public void onSensorChanged(SensorEvent event) {   // !!! This is called very frequently, about 6 times per second.
         float zValue = event.values[2];
 
-        if (zValue >= 0) {
-          mPhoneFaceState= ConstantsUtils.PHONE_FACE_STATE_UP;
-        } else {
-          mPhoneFaceState= ConstantsUtils.PHONE_FACE_STATE_DOWN;
+        int newPhoneFaceState = (zValue >= 0) ? ConstantsUtils.PHONE_FACE_STATE_UP : ConstantsUtils.PHONE_FACE_STATE_DOWN;
+
+        if (mPhoneFaceState != newPhoneFaceState) {
+          Log.v(TAG, "onSensorChanged: mPhoneFaceState=[" + mPhoneFaceState + "], newPhoneFaceState=[" +
+              newPhoneFaceState + "]");
+          mPhoneFaceState = newPhoneFaceState;
         }
       }
 

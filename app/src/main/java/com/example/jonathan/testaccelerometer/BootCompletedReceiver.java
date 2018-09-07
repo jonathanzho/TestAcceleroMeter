@@ -6,10 +6,8 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.example.jonathan.testaccelerometer.utils.ConstantsUtils;
+import com.example.jonathan.testaccelerometer.utils.JobSchedulerUtils;
 import com.example.jonathan.testaccelerometer.utils.SensorManagerUtils;
-import com.example.jonathan.testaccelerometer.utils.WifiManagerUtils;
-
-import static com.example.jonathan.testaccelerometer.utils.SensorManagerUtils.getInstance;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
   private static final String TAG = ConstantsUtils.APP_TAG + BootCompletedReceiver.class.getSimpleName();
@@ -23,24 +21,14 @@ public class BootCompletedReceiver extends BroadcastReceiver {
     Log.v(TAG, "onReceive: starting launcher Activity for package=[" + context.getPackageName() + "]");
     context.startActivity(launchSelfIntent);
 
-    handleFaceDownWiFiConnection();
+    handleFaceDownWiFiConnection(context);
   }
 
-  private void handleFaceDownWiFiConnection() {
+  private void handleFaceDownWiFiConnection(Context context) {
     Log.d(TAG, "handleFaceDownWiFiConnection");
 
-    int phoneFaceState = SensorManagerUtils.getInstance().checkPhoneFaceStatePeriodically(
-        ConstantsUtils.CHECK_PHONE_FACE_STATE_SLEEP_MILLIS,
-        ConstantsUtils.CHECK_PHONE_FACE_STATE_MAX_TRIALS);
+    SensorManagerUtils.getInstance();    // Early creation.
 
-    if (phoneFaceState == ConstantsUtils.PHONE_FACE_STATE_DOWN) {
-      boolean wifiEnabled = WifiManagerUtils.getWifiEnabled(TAMApplication.getContext());
-
-      if (!wifiEnabled) {
-        WifiManagerUtils.setWifiEnabled(TAMApplication.getContext(), true);
-
-        // TODO: connect to the specific wifi
-      }
-    }
+    JobSchedulerUtils.scheduleWiFiConnection(context);
   }
 }

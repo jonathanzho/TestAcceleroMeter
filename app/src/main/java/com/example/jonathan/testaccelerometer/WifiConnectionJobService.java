@@ -67,7 +67,7 @@ public class WifiConnectionJobService extends JobService {
           ConstantsUtils.CHECK_WIFI_ENABLED_MAX_TRIALS);
 
       if (wifiEnabled) {
-        WifiManagerUtils.connect(context, ConstantsUtils.MOBILE_HOTSPOT_SSID, ConstantsUtils.MOBILE_HOTSPOT_PASS);
+        WifiManagerUtils.connect(context, ConstantsUtils.SAMSUNGSURE_OPEN_MOBILE_HOTSPOT_SSID);
       } else {
         Log.e(TAG, "performJob: WiFi is not enabled after request. Exit !!!");
         return;

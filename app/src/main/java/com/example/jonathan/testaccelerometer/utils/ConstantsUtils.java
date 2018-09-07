@@ -16,6 +16,5 @@ public class ConstantsUtils {
   public static final int WIFI_CONNECTION_JOB_ID = 1;    // Must be unique among all packages of the same uid.
   public static final int REBOOT_OVERRIDE_DEADLINE_MILLIS = 5000;
 
-  public static final String MOBILE_HOTSPOT_SSID = "Verizon-SM-G950U-5D50";
-  public static final String MOBILE_HOTSPOT_PASS = "scjp070&";
+  public static final String SAMSUNGSURE_OPEN_MOBILE_HOTSPOT_SSID = "samsungsure";
 }

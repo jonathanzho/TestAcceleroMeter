@@ -72,15 +72,14 @@ public class WifiManagerUtils {
     return state;
   }
 
-  public static void connect(final Context context, final String networkSSID, final String networkPass) {
-    Log.d(TAG, "connect: networkSSID=[" + networkSSID + "], networkPass=[" + networkPass + "]");
+  public static void connect(final Context context, final String networkSSID) {
+    Log.d(TAG, "connect: networkSSID=[" + networkSSID + "]");
 
     WifiConfiguration wifiConfig = new WifiConfiguration();
     wifiConfig.SSID = String.format("\"%s\"", networkSSID);
-    wifiConfig.preSharedKey = String.format("\"%s\"", networkPass);
+    wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
 
     WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-    //remember id
     int netId = wifiManager.addNetwork(wifiConfig);
     wifiManager.disconnect();
     wifiManager.enableNetwork(netId, true);

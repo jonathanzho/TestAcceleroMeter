@@ -10,18 +10,19 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.jonathan.testaccelerometer.utils.ConstantsUtils;
+import com.example.jonathan.testaccelerometer.utils.SensorManagerUtils;
 import com.example.jonathan.testaccelerometer.utils.WifiManagerUtils;
 
 import java.util.List;
 
 public class MainActivity extends Activity {
   private static final String TAG = ConstantsUtils.APP_TAG + MainActivity.class.getSimpleName();
-
+/*
   private SensorManager mSensorManager;
   private Sensor mAcceleroMeterSensor;
   private SensorEventListener mAcceleroMeterListener;
   private boolean mIsAcceleroMeterPresent;
-
+*/
   private TextView mFaceTextView;
 
   @Override
@@ -32,7 +33,7 @@ public class MainActivity extends Activity {
     setContentView(R.layout.activity_main);
 
     mFaceTextView = (TextView) findViewById(R.id.faceTextView);
-
+/*
     mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
     List<Sensor> sensorList = mSensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER);
@@ -63,7 +64,7 @@ public class MainActivity extends Activity {
         Log.d(TAG, "onAccuracyChanged");
       }
     };
-
+   */
     Log.v(TAG, "onCreate: end");
   }
 
@@ -72,7 +73,7 @@ public class MainActivity extends Activity {
     Log.d(TAG, "onResume");
 
     super.onResume();
-
+/*
     if (mIsAcceleroMeterPresent) {
       mSensorManager.registerListener(mAcceleroMeterListener, mAcceleroMeterSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
@@ -81,6 +82,7 @@ public class MainActivity extends Activity {
     if (!isWifiEnabled) {
       WifiManagerUtils.setWifiEnabled(this,true);
     }
+*/
   }
 
   @Override
@@ -88,9 +90,10 @@ public class MainActivity extends Activity {
     Log.d(TAG, "onPause");
 
     super.onPause();
-
+/*
     if (mIsAcceleroMeterPresent) {
       mSensorManager.unregisterListener(mAcceleroMeterListener);
     }
+*/
   }
 }

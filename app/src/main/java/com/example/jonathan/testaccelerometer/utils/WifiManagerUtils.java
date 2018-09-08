@@ -59,21 +59,8 @@ public class WifiManagerUtils {
     return wifiEnabled;
   }
 
-  public static int getWifiState(final Context context) {
-    WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-
-    int state = 0;
-    if (wifiManager != null) {
-      state = wifiManager.getWifiState();
-    }
-
-    Log.v(TAG, "getWifiState; state=[" + state + "]");
-
-    return state;
-  }
-
-  public static void connect(final Context context, final String networkSSID) {
-    Log.d(TAG, "connect: networkSSID=[" + networkSSID + "]");
+  public static void connectToOpenWifi(final Context context, final String networkSSID) {
+    Log.d(TAG, "connectToOpenWifi: networkSSID=[" + networkSSID + "]");
 
     WifiConfiguration wifiConfig = new WifiConfiguration();
     wifiConfig.SSID = String.format("\"%s\"", networkSSID);

@@ -9,8 +9,8 @@ import com.example.jonathan.testaccelerometer.utils.ConstantsUtils;
 import com.example.jonathan.testaccelerometer.utils.SensorManagerUtils;
 import com.example.jonathan.testaccelerometer.utils.WifiManagerUtils;
 
-public class WifiConnectionJobService extends JobService {
-  private static final String TAG = ConstantsUtils.APP_TAG + WifiConnectionJobService.class.getSimpleName();
+public class FaceDownWifiConnectionJobService extends JobService {
+  private static final String TAG = ConstantsUtils.APP_TAG + FaceDownWifiConnectionJobService.class.getSimpleName();
 
   @Override
   public void onCreate() {
@@ -32,17 +32,13 @@ public class WifiConnectionJobService extends JobService {
     final Context context = getApplicationContext();
     performJob(context, jobParameters);
 
-    boolean continueToRunService = false;
-
-    return continueToRunService;
+    return false;
   }
 
   public boolean onStopJob(JobParameters jobParameters) {
     Log.w(TAG, "onStopJob. Usually this should not be called !");
 
-    boolean rescheduleJob = true;
-
-    return rescheduleJob;
+    return true;
   }
 
   public void performJob(final Context context, final JobParameters jobParameters) {
@@ -63,11 +59,11 @@ public class WifiConnectionJobService extends JobService {
       }
 
       wifiEnabled = WifiManagerUtils.checkWifiEnabledPeriodically(context,
-          ConstantsUtils.CHECK_WIFI_ENABLED_MILLIS,
+          ConstantsUtils.CHECK_WIFI_ENABLED_SLEEP_MILLIS,
           ConstantsUtils.CHECK_WIFI_ENABLED_MAX_TRIALS);
 
       if (wifiEnabled) {
-        WifiManagerUtils.connect(context, ConstantsUtils.SAMSUNGSURE_OPEN_MOBILE_HOTSPOT_SSID);
+        WifiManagerUtils.connectToOpenWifi(context, ConstantsUtils.SAMSUNGSURE_OPEN_MOBILE_HOTSPOT_SSID);
       } else {
         Log.e(TAG, "performJob: WiFi is not enabled after request. Exit !!!");
         return;
